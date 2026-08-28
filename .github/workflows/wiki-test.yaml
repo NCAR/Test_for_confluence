@@ -1,0 +1,24 @@
+name: Wiki Test
+
+on:
+  gollum: 
+  
+jobs:
+  publish-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout wiki
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+
+      - name: List Wiki files
+        run: |
+          ls -la wiki
+
+      - name: Show Home page
+        run: |
+          cat wiki/Home.md
+  
