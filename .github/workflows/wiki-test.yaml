@@ -3,6 +3,8 @@ name: Wiki Test
 on:
   gollum: 
   
+#gollum is the GitHub event that fires when someone creates or updates a wiki page in the repo.
+
 jobs:
   publish-wiki:
     runs-on: ubuntu-latest
