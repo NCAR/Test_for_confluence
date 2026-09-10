@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout main repository
-        uses: actions/checkout@5
+        uses: actions/checkout@v5
         
       - name: Checkout wiki
         uses: actions/checkout@v5
