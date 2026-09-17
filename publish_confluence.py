@@ -25,12 +25,12 @@ print("Confluence response status:", response.status_code)
 
 if response.status_code == 200:
   page = response.json()
-  print("COnnected to COnfluence successfully")
+  print("Connected to Confluence successfully")
   print("Page title:", page["title"])
   print("Current version:", page["version"]["number"])
 
 else:
-    print("Failed to retrive the COnfluence page")
+    print("Failed to retrive the Confluence page")
     print(response.text)
         
 
