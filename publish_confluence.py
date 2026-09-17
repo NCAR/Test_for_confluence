@@ -1,7 +1,7 @@
 import os
 import requests
 
-print("Python script is running")
+print("Confluence sync")
 
 CONFLUENCE_URL = os.environ["CONFLUENCE_URL"]
 CONFLUENCE_TOKEN = os.environ["CONFLUENCE_TOKEN"]
