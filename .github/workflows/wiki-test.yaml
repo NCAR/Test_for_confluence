@@ -41,5 +41,4 @@ jobs:
           CONFLUENCE_URL: ${{ secrets.CONFLUENCE_URL }}
           CONFLUENCE_TOKEN: ${{ secrets.CONFLUENCE_TOKEN }}
           CONFLUENCE_PAGE_ID: ${{ secrets.CONFLUENCE_PAGE_ID }}
-        run: |
-          python publish_confluence.py
+      
