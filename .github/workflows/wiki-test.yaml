@@ -8,7 +8,7 @@ on:
 
 jobs:
   publish-wiki:
-    runs-on: ubuntu-latest
+    runs-on: codebuild-github-wiki-test-${{ github.run_id }}-${{ github.run_attempt }}
 
     steps:
       - name: Checkout main repository
@@ -29,7 +29,7 @@ jobs:
           cat wiki/Home.md
 
       - name: Check CodeBuild public IP
-       run: |
+        run: |
            curl -s --max-time 20 https://checkip.amazonaws.com
 
       - name: Test COnfluence Connectivity
