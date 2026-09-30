@@ -30,7 +30,7 @@ jobs:
 
       - name: Test COnfluence Connectivity
         run: |
-            curl -I ${{secrets.CONFLUENCE_URL}}
+            curl -I --connect-timeout 10 --max-time 20 ${{secrets.CONFLUENCE_URL}}
 
       - name: Run Python script
         env: 
