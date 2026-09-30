@@ -28,6 +28,10 @@ jobs:
         run: |
           cat wiki/Home.md
 
+      - name: Check CodeBuild public IP
+       run: |
+           curl -s --max-time 20 https://checkip.amazonaws.com
+
       - name: Test COnfluence Connectivity
         run: |
             curl -I --connect-timeout 10 --max-time 20 ${{secrets.CONFLUENCE_URL}}
