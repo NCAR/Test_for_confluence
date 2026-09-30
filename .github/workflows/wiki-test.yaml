@@ -1,6 +1,7 @@
 name: Wiki Test
 
 on:
+  workflow_dispatch: 
   gollum: 
   
 #gollum is the GitHub event that fires when someone creates or updates a wiki page in the repo.
@@ -26,6 +27,10 @@ jobs:
       - name: Show Home page
         run: |
           cat wiki/Home.md
+
+      - name: Test COnfluence Connectivity
+        run: |
+            curl -I ${{secrets.CONFLUENCE_URL}}
 
       - name: Run Python script
         env: 
