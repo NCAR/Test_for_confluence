@@ -36,9 +36,15 @@ jobs:
         run: |
             curl -I --connect-timeout 10 --max-time 20 ${{secrets.CONFLUENCE_URL}}
 
+      - name: Install Python dependencies
+        run: |
+          pip install requests markdown
+
       - name: Run Python script
         env: 
           CONFLUENCE_URL: ${{ secrets.CONFLUENCE_URL }}
           CONFLUENCE_TOKEN: ${{ secrets.CONFLUENCE_TOKEN }}
           CONFLUENCE_PAGE_ID: ${{ secrets.CONFLUENCE_PAGE_ID }}
+        run: |
+          python publish_confluence.py
       
