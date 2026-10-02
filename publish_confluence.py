@@ -16,9 +16,32 @@ space_key = os.environ["CONFLUENCE_SPACE_KEY"]
 wiki_files = Path("wiki").glob("*.md")
 
 for wiki_file in wiki_files:
+    
     title = wiki_file.stem        #stem removes .md from the wiki page name and print, so we can use that as confluence page
+    
     print(f"Found Wiki page: {wiki_file} -> Confluence title: {title}")
 
+    response = requests.get(
+        f"{confluence_url}/rest/api/content",
+        params={
+            "spaceKey": space_key,
+            "title": title,
+            "type": "page"
+     },
+     headers={
+         "Authorization": f"Bearer {token}"
+     }
+ )
+
+response.raise_for_status()
+
+results = response.json()["results']
+
+if results: 
+        print(f"Page exists in Confluence: {title}")
+
+else:
+    print(f"Page does not exists in Confluence: {title}")
 # Read the GitHub Wiki
 
 with open("wiki/Home.md", "r", encoding="utf-8") as file:
