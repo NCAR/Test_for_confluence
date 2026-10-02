@@ -20,12 +20,12 @@ wiki_files = []
 
 for changed_page in wiki_pages:
     page_name = changed_page["page_name"]
-    wiki_files.append(Path("wiki") / f"{page_name}.md")
+    wiki_files.append((Path("wiki") / f"{page_name}.md", page_title))
     
 for wiki_file in wiki_files:
     
-    title = wiki_file.stem        #stem removes .md from the wiki page name and print, so we can use that as confluence page
-
+    title = changed_page["title"]
+    
     #Read the current Wiki page
     
     with open(wiki_file, "r", encoding="utf-8") as file:
