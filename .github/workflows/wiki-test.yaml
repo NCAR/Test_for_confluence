@@ -25,6 +25,11 @@ jobs:
           cd wiki
           git log --oneline -5
 
+      - name: Show deleted Wiki commit
+        run: |
+          cd wiki
+          git show --names-status --format=fuller 121029d
+
       - name: Show changes wiki pages
         run: |
           echo '${{ toJson(github.event.pages) }}'
@@ -45,7 +50,6 @@ jobs:
         env: 
           CONFLUENCE_URL: ${{ secrets.CONFLUENCE_URL }}
           CONFLUENCE_TOKEN: ${{ secrets.CONFLUENCE_TOKEN }}
-          CONFLUENCE_PAGE_ID: ${{ secrets.CONFLUENCE_PAGE_ID }}
           CONFLUENCE_SPACE_KEY: ${{ secrets.CONFLUENCE_SPACE_KEY }}
           WIKI_PAGES: ${{ toJson(github.event.pages) }}
         run: |
