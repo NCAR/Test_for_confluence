@@ -19,6 +19,11 @@ jobs:
           repository: ${{ github.repository }}.wiki
           path: wiki
 
+      - name: Show Wiki Git history
+        run: |
+          cd wiki
+          git log --oneline -5
+
       - name: Show changes wiki pages
         run: |
           echo '${{ toJson(github.event.pages) }}'
