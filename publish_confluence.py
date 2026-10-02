@@ -11,6 +11,7 @@ import markdown        # markdown converts GitHub Markdown into HTML
 confluence_url = os.environ["CONFLUENCE_URL"].rstrip("/")
 token = os.environ["CONFLUENCE_TOKEN"]
 page_id = os.environ["CONFLUENCE_PAGE_ID"]
+space_key = os.environ["CONFLUENCE_SPACE_KEY"]
 
 # Read the GitHub Wiki
 
