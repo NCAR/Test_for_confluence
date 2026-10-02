@@ -33,15 +33,16 @@ for wiki_file in wiki_files:
      }
    )
 
-response.raise_for_status()
+    response.raise_for_status()
 
-results = response.json()["results"]
+    results = response.json()["results"]
 
-if results: 
-        print(f"Page exists in Confluence: {title}")
+    if results: 
+        print(f"Page exist in Confluence: {title}")
 
-else:
-    print(f"Page does not exists in Confluence: {title}")
+    else:
+        print(f"Page does not exist in Confluence: {title}")
+       
 # Read the GitHub Wiki
 
 with open("wiki/Home.md", "r", encoding="utf-8") as file:
