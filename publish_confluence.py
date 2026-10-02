@@ -40,6 +40,9 @@ for wiki_file in wiki_files:
     if results: 
         print(f"Page exist in Confluence: {title}")
 
+        found_page_id = results[0]["id"]
+        print(f"Found Confluence Page ID: {found_page_id}")
+
     else:
         print(f"Page does not exist in Confluence: {title}")
        
