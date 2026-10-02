@@ -10,7 +10,6 @@ from pathlib import Path
 
 confluence_url = os.environ["CONFLUENCE_URL"].rstrip("/")
 token = os.environ["CONFLUENCE_TOKEN"]
-page_id = os.environ["CONFLUENCE_PAGE_ID"]
 space_key = os.environ["CONFLUENCE_SPACE_KEY"]
 
 wiki_files = Path("wiki").glob("*.md")
@@ -18,6 +17,15 @@ wiki_files = Path("wiki").glob("*.md")
 for wiki_file in wiki_files:
     
     title = wiki_file.stem        #stem removes .md from the wiki page name and print, so we can use that as confluence page
+
+    #Read the current Wiki page
+    
+    with open(wiki_file, "r", encoding="utf-8") as file:
+        markdown_content = file.read()
+
+    # convert Markdown to HTML
+
+    html_content = markdown.markdown(markdown_content)
     
     print(f"Found Wiki page: {wiki_file} -> Confluence title: {title}")
 
@@ -43,62 +51,54 @@ for wiki_file in wiki_files:
         found_page_id = results[0]["id"]
         print(f"Found Confluence Page ID: {found_page_id}")
 
+        # Get the current version
+        
+        response = requests.get(
+           f"{confluence_url}/rest/api/content/{found_page_id}",
+           params={"expand": "version"},
+           headers={
+               "Authorization": f"Bearer {token}"
+           }
+        )
+        
+        response.raise_for_status()
+
+        page = response.json()
+        new_version = page["version"]["number"] + 1
+
+        # prepare the updated page
+
+        payload = {
+           "id": found_page_id,
+           "type": "page",
+           "title": page["title"],
+           "version": {
+               "number": new_version
+           },
+           "body": {
+              "storage": {
+                  "value": html_content,
+                  "representation": "storage"
+               }
+             }
+          }
+
+        # update the Confluence page
+
+        response = requests.put( 
+            f"{confluence_url}/rest/api/content/{found_page_id}",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"  
+            },
+            json=payload 
+        )
+    
+        response.raise_for_status()
+
+        print(f"Updated Confluence page: {title}")
+             
     else:
         print(f"Page does not exist in Confluence: {title}")
        
-# Read the GitHub Wiki
 
-with open("wiki/Home.md", "r", encoding="utf-8") as file:
-    markdown_content = file.read()
-
-# convert Markdown to HTML
-
-html_content = markdown.markdown(markdown_content)
-
-headers = {
-    "Authorization": f"Bearer {token}",
-    "Content-Type": "application/json"
-  }
-
-# asking Confluence for the current version - so everytime a confluence page is edited and saved, confluence increases its version
-
-response = requests.get(
-  f"{confluence_url}/rest/api/content/{page_id}",
-  params={"expand": "version"},
-  headers=headers
-)
-response.raise_for_status()
-
-page = response.json()
-
-new_version = page["version"]["number"] + 1
-
-# prepare the updated page
-
-payload = {
-    "id": page_id,
-    "type": "page",
-    "title": page["title"],
-    "version": {
-        "number": new_version
-     },
-     "body": {
-         "storage": {
-             "value": html_content,
-             "representation": "storage"
-      }
-    }
-}
-
-
-# update the Confluence page
-
-response = requests.put( 
-  f"{confluence_url}/rest/api/content/{page_id}",
-  headers=headers,
-  json=payload
-)
-response.raise_for_status()
-
-print("Confluence page updated successfully!")
-             
