@@ -16,7 +16,8 @@ space_key = os.environ["CONFLUENCE_SPACE_KEY"]
 wiki_files = Path("wiki").glob("*.md")
 
 for wiki_file in wiki_files:
-    print(f"Found Wiki page: {wiki_file}")
+    title = wiki_file.stem        #stem removes .md from the wiki page name and print, so we can use that as confluence page
+    print(f"Found Wiki page: {wiki_file} -> Confluence title: {title}")
 
 # Read the GitHub Wiki
 
