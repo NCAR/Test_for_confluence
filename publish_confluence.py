@@ -31,11 +31,11 @@ for wiki_file in wiki_files:
      headers={
          "Authorization": f"Bearer {token}"
      }
- )
+   )
 
 response.raise_for_status()
 
-results = response.json()["results']
+results = response.json()["results"]
 
 if results: 
         print(f"Page exists in Confluence: {title}")
