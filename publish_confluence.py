@@ -96,7 +96,10 @@ for wiki_file in wiki_files:
     
         response.raise_for_status()
 
+        updated_page = response.json()
+
         print(f"Updated Confluence page: {title}")
+        print(f"Confluence returned version: {updated_page['version']['number']}")
              
     else:
         print(f"Page does not exist in Confluence: {title}")
