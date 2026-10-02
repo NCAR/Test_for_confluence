@@ -28,7 +28,7 @@ jobs:
       - name: Show deleted Wiki commit
         run: |
           cd wiki
-          git show --names-status --format=fuller 121029d
+          git show --name-status --format=fuller 121029d
 
       - name: Show changes wiki pages
         run: |
