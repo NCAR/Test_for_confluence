@@ -4,7 +4,7 @@
 import os              # os gets GitHub secret values
 import requests        # requests talk to Confluence REST API
 import markdown        # markdown converts GitHub Markdown into HTML
-
+from pathlib import Path
 
 # Getting values from GitHub Secrets
 
@@ -12,6 +12,11 @@ confluence_url = os.environ["CONFLUENCE_URL"].rstrip("/")
 token = os.environ["CONFLUENCE_TOKEN"]
 page_id = os.environ["CONFLUENCE_PAGE_ID"]
 space_key = os.environ["CONFLUENCE_SPACE_KEY"]
+
+wiki_files = Path("wiki").glob("*.md")
+
+for wiki_file in wiki_files:
+    print(f"Found Wiki page: {wiki_file}")
 
 # Read the GitHub Wiki
 
