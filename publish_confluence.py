@@ -83,7 +83,7 @@ for wiki_file in wiki_files:
              }
           }
 
-        # update the Confluence page
+        # update the existing Confluence page
 
         response = requests.put( 
             f"{confluence_url}/rest/api/content/{found_page_id}",
@@ -100,5 +100,30 @@ for wiki_file in wiki_files:
              
     else:
         print(f"Page does not exist in Confluence: {title}")
-       
 
+        # Create a new Confluence page
+        payload = {
+           "type": "page",
+           "title": title,            
+           "space": {
+               "key": space_key
+           },
+           "body": {
+              "storage": {
+                  "value": html_content,
+                  "representation": "storage"
+               }
+             }
+          } 
+        response = requests.post( 
+            f"{confluence_url}/rest/api/content",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"  
+            },
+            json=payload 
+        )
+    
+        response.raise_for_status()
+
+        print(f"Created Confluence page: {title}")
