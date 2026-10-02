@@ -19,6 +19,10 @@ jobs:
           repository: ${{ github.repository }}.wiki
           path: wiki
 
+      - name: Show changes wiki pages
+        run: |
+          echo '${{ toJson(github.event.pages) }}'
+
       - name: List Wiki files
         run: |
           ls -la wiki
