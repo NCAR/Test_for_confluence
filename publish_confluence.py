@@ -20,11 +20,11 @@ wiki_files = []
 
 for changed_page in wiki_pages:
     page_name = changed_page["page_name"]
+    page_title = changed_page["title"]
     wiki_files.append((Path("wiki") / f"{page_name}.md", page_title))
     
-for wiki_file in wiki_files:
+for wiki_file, title in wiki_files:
     
-    title = changed_page["title"]
     
     #Read the current Wiki page
     
