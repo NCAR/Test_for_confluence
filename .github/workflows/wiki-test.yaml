@@ -41,7 +41,7 @@ jobs:
           CONFLUENCE_TOKEN: ${{ secrets.CONFLUENCE_TOKEN }}
           CONFLUENCE_PAGE_ID: ${{ secrets.CONFLUENCE_PAGE_ID }}
           CONFLUENCE_SPACE_KEY: ${{ secrets.CONFLUENCE_SPACE_KEY }}
-          WIKI_PAGE_NAME: ${{ toJson(github.event.pages) }}
+          WIKI_PAGES: ${{ toJson(github.event.pages) }}
         run: |
           python publish_confluence.py
       
